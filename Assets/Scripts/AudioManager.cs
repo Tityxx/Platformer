@@ -38,8 +38,11 @@ public class AudioManager : MonoBehaviour
     public static void Play(string audio)
     {
         AudioSource audioSource = music[audio].GetAudioSource();
-        audioSource.PlayOneShot(audioSource.clip);
-        if (music[audio].isMusic) nowPlaying = audioSource;
+        if(audioSource != null)
+        {
+            audioSource.PlayOneShot(audioSource.clip);
+            if (music[audio].isMusic) nowPlaying = audioSource;
+        }
     }
     public static void setMusicVolume(float vol)
     {

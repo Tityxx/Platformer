@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
+    public GameObject hitCollider;
     private Rigidbody2D rb;
     private Animator anim;
     private float speed, corrSpeed = 10;
@@ -11,6 +12,8 @@ public class Movement : MonoBehaviour
     private int onGround = 0;
     private bool doubleJumpIsReady = false;
     private Vector3 startPos;
+    private KeyCode keyLeft = KeyCode.LeftArrow, keyRight = KeyCode.RightArrow, keyJump = KeyCode.UpArrow,
+        keyBoost = KeyCode.LeftShift, keyHit = KeyCode.Z;
 
     void Start()
     {
@@ -22,7 +25,7 @@ public class Movement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && (onGround > 0 || doubleJumpIsReady))
+        if (Input.GetKeyDown(keyJump) && (onGround > 0 || doubleJumpIsReady))
         {
             if(onGround > 0)
             {
@@ -34,11 +37,11 @@ public class Movement : MonoBehaviour
                 doubleJumpIsReady = false;
             }
         }
-        if(Input.GetKey(KeyCode.LeftShift))
+        if(Input.GetKey(keyBoost))
         {
             speed = corrSpeed * 1.5f;
         }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(keyBoost))
         {
             speed = corrSpeed;
         }
@@ -46,17 +49,36 @@ public class Movement : MonoBehaviour
         {
             Die();
         }
+        if (Input.GetKeyDown(keyHit) && onGround > 0)
+        {
+            if(Mathf.Abs(rb.velocity.x) > 0)
+            {
+                Hit("Hit_and_Run");
+            }
+            else
+            {
+                Hit("Hit_and_Stay");
+            }
+        }
+        if (!(anim.GetCurrentAnimatorStateInfo(0).IsName("Hit_and_Run") || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit_and_Stay")))
+        {
+            hitCollider.SetActive(false);
+        }
+        else
+        {
+            hitCollider.SetActive(true);
+        }
     }
     void FixedUpdate()
     {
         anim.SetFloat("vSpeed", rb.velocity.y);
         anim.SetFloat("speed", Mathf.Abs(rb.velocity.x));
-
-        if (Input.GetKey(KeyCode.LeftArrow))
+        
+        if (Input.GetKey(keyLeft))
         {
             MoveLeft();
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(keyRight))
         {
             MoveRight();
         }
@@ -96,7 +118,7 @@ public class Movement : MonoBehaviour
     }
     public void Jump()
     {
-        AudioManager.Play("sound_0");
+        //AudioManager.Play("sound_0");
         if (onGround > 0)
         {
             rb.velocity = new Vector2(0, jumpForce);
@@ -109,5 +131,10 @@ public class Movement : MonoBehaviour
     private void Die()
     {
         transform.position = startPos;
+    }
+    private void Hit(string str)
+    {
+        anim.Play(str);
+        //hitCollider.SetActive(true);
     }
 }
