@@ -8,7 +8,10 @@ TagManager:
   - Wall
   - Enemy
   - Music
-  - DeadEnemy
+  - Monster
+  - Dead
+  - DestrObjects
+  - Bonus
   layers:
   - Default
   - TransparentFX

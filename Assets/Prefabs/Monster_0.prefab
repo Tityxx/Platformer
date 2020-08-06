@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7055967119232885114}
   m_Layer: 8
   m_Name: Monster_0
-  m_TagString: Enemy
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcdd82d23f94f1f4a8688de9b6d6840e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  distanceWalk: 5
 --- !u!95 &7842624981960924808
 Animator:
   serializedVersion: 3

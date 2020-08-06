@@ -4,11 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-    public GameObject hitCollider;
+    public GameObject hitObject;
+    private Animator hitAnimator;
+    private CircleCollider2D hitCollider;
     private Rigidbody2D rb;
     private Animator anim;
     private float speed, corrSpeed = 10;
-    private float jumpForce = 25, jumpForce2;
+    private float jumpForce = 27, jumpForce2;
     private int onGround = 0;
     private bool doubleJumpIsReady = false;
     private Vector3 startPos;
@@ -22,6 +24,8 @@ public class Movement : MonoBehaviour
         startPos = transform.position;
         speed = corrSpeed;
         jumpForce2 = jumpForce * 1.2f;
+        hitAnimator = hitObject.GetComponentInChildren<Animator>();
+        hitCollider = hitObject.GetComponent<CircleCollider2D>();
     }
     void Update()
     {
@@ -51,22 +55,27 @@ public class Movement : MonoBehaviour
         }
         if (Input.GetKeyDown(keyHit) && onGround > 0)
         {
-            if(Mathf.Abs(rb.velocity.x) > 0)
-            {
-                Hit("Hit_and_Run");
-            }
-            else
-            {
-                Hit("Hit_and_Stay");
-            }
+            //hitCollider.enabled = true;
+            hitAnimator.Play("Hit");
         }
-        if (!(anim.GetCurrentAnimatorStateInfo(0).IsName("Hit_and_Run") || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit_and_Stay")))
+        //if (hitCollider.activeSelf == true)
+        //{
+        //    if (!hitAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+        //    {
+        //        //hitCollider.SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        hitCollider.SetActive(true);
+        //    }
+        //}
+        if (!hitAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
         {
-            hitCollider.SetActive(false);
+            hitCollider.enabled = false;
         }
         else
         {
-            hitCollider.SetActive(true);
+            hitCollider.enabled = true;
         }
     }
     void FixedUpdate()
@@ -92,7 +101,7 @@ public class Movement : MonoBehaviour
             doubleJumpIsReady = true;
             anim.SetInteger("onGround", onGround);
         }
-        else if (tag == "Enemy")
+        else if (tag == "Enemy" || tag == "Monster")
         {
             Die();
         }
@@ -104,6 +113,14 @@ public class Movement : MonoBehaviour
         {
             onGround--;
             anim.SetInteger("onGround", onGround);
+        }
+    }
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        string tag = collider.gameObject.tag;
+        if (tag == "Bonus")
+        {
+            Destroy(collider.gameObject);
         }
     }
     public void MoveRight()
@@ -125,16 +142,11 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2(0, jumpForce2);
+            rb.velocity = new Vector2(0, jumpForce);
         }
     }
     private void Die()
     {
         transform.position = startPos;
-    }
-    private void Hit(string str)
-    {
-        anim.Play(str);
-        //hitCollider.SetActive(true);
     }
 }
