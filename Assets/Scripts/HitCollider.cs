@@ -10,5 +10,9 @@ public class HitCollider : MonoBehaviour
             collision.gameObject.tag = "Dead";
             Destroy(collision.gameObject);
         }
+        else if (tag == "DestrObjects")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

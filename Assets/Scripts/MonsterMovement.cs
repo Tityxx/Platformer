@@ -42,15 +42,7 @@ public class MonsterMovement : MonoBehaviour
        }
     }
 
-    //void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    string tag = collision.gameObject.tag;
-    //    if (tag == "Player")
-    //    {
-    //        collision.gameObject.transform.position = new Vector3(-33, -5, 0);
-    //    }
-    //}
-
+    
     public void MoveRight()
     {
         rb.velocity = new Vector2(speed, rb.velocity.y);

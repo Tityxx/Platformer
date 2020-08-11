@@ -49,26 +49,10 @@ public class Movement : MonoBehaviour
         {
             speed = corrSpeed;
         }
-        if (transform.position.y < -13)
+        if (Input.GetKeyDown(keyHit))
         {
-            Die();
-        }
-        if (Input.GetKeyDown(keyHit) && onGround > 0)
-        {
-            //hitCollider.enabled = true;
             hitAnimator.Play("Hit");
         }
-        //if (hitCollider.activeSelf == true)
-        //{
-        //    if (!hitAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
-        //    {
-        //        //hitCollider.SetActive(false);
-        //    }
-        //    else
-        //    {
-        //        hitCollider.SetActive(true);
-        //    }
-        //}
         if (!hitAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
         {
             hitCollider.enabled = false;
