@@ -68,8 +68,16 @@ public class AudioManager : MonoBehaviour
     {
         musicVol = PlayerPrefs.GetFloat("music");
         soundsVol = PlayerPrefs.GetFloat("sounds");
-        setMusicVolume((musicVol == 0) ? baseVolume : musicVol);
-        setSoundVolume((soundsVol == 0) ? baseVolume : soundsVol);
+        if (musicVol == 0)
+        {
+            setMusicVolume(baseVolume);
+            musicVol = baseVolume;
+        }
+        if (soundsVol == 0)
+        {
+            setSoundVolume(baseVolume);
+            soundsVol = baseVolume;
+        }
     }
     public static void SaveVolume()
     {

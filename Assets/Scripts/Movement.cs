@@ -131,6 +131,7 @@ public class Movement : MonoBehaviour
     }
     private void Die()
     {
-        transform.position = startPos;
+        //transform.position = startPos;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
