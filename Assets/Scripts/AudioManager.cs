@@ -70,14 +70,14 @@ public class AudioManager : MonoBehaviour
         soundsVol = PlayerPrefs.GetFloat("sounds");
         if (musicVol == 0)
         {
-            setMusicVolume(baseVolume);
             musicVol = baseVolume;
         }
         if (soundsVol == 0)
         {
-            setSoundVolume(baseVolume);
             soundsVol = baseVolume;
         }
+        setMusicVolume(musicVol);
+        setSoundVolume(soundsVol);
     }
     public static void SaveVolume()
     {

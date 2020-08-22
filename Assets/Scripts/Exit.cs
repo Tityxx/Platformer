@@ -6,7 +6,7 @@ public class Exit : MonoBehaviour
 
     void OnMouseDown()
     {
-        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        GameManager.instance.LoadNewScene("Menu", false);
         Time.timeScale = 1f;
     }
 }

@@ -1,10 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
     public GameObject hitObject;
+    public Text scores;
+
     private Animator hitAnimator;
     private CircleCollider2D hitCollider;
     private Rigidbody2D rb;
@@ -89,6 +92,13 @@ public class Movement : MonoBehaviour
         {
             Die();
         }
+        else if (tag == "Door")
+        {
+            if(GameManager.instance.HaveKey(collision.gameObject.GetComponent<DoorOrKeyColor>().color))
+            {
+                Destroy(collision.gameObject);
+            }
+        }
     }
     void OnCollisionExit2D(Collision2D collision)
     {
@@ -104,6 +114,12 @@ public class Movement : MonoBehaviour
         string tag = collider.gameObject.tag;
         if (tag == "Bonus")
         {
+            Destroy(collider.gameObject);
+            GameManager.instance.IncScores(scores);
+        }
+        else if(tag == "Key")
+        {
+            GameManager.instance.AddKey(collider.gameObject.GetComponent<DoorOrKeyColor>().color);
             Destroy(collider.gameObject);
         }
     }
@@ -131,7 +147,6 @@ public class Movement : MonoBehaviour
     }
     private void Die()
     {
-        //transform.position = startPos;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.instance.LoadNewScene(SceneManager.GetActiveScene().name, false);
     }
 }

@@ -5,6 +5,6 @@ public class Settings : MonoBehaviour
 {
     void OnMouseDown()
     {
-        SceneManager.LoadScene("Settings", LoadSceneMode.Single);
+        GameManager.instance.LoadNewScene("Settings", false);
     }
 }

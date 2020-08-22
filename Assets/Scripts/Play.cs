@@ -11,11 +11,12 @@ public class Play : MonoBehaviour
             string music = "music_" + Random.Range(0, AudioManager.maxQtyMusic).ToString();
             AudioManager.Play(music);
             AudioManager.LoadVolume();
+            GameManager.instance.LoadSettings();
             first = false;
         }
     }
     void OnMouseDown()
     {
-        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+        GameManager.instance.LoadNewScene("Level1", false);
     }
 }

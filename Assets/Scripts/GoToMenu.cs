@@ -5,6 +5,6 @@ public class GoToMenu : MonoBehaviour
 {
     void OnMouseDown()
     {
-        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        GameManager.instance.LoadNewScene("Menu", false);
     }
 }
