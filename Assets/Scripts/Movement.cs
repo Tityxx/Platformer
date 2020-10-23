@@ -55,6 +55,7 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(keyHit))
         {
             hitAnimator.Play("Hit");
+            AudioManager.Play("sound_0");
         }
         if (!hitAnimator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
         {
@@ -122,6 +123,14 @@ public class Movement : MonoBehaviour
             GameManager.instance.AddKey(collider.gameObject.GetComponent<DoorOrKeyColor>().color);
             Destroy(collider.gameObject);
         }
+        else if (tag == "RestartLevel")
+        {
+            Die();
+        }
+        else if (tag == "NextLevel")
+        {
+            GameManager.instance.LoadNewScene("Menu", true);
+        }
     }
     public void MoveRight()
     {
@@ -135,7 +144,6 @@ public class Movement : MonoBehaviour
     }
     public void Jump()
     {
-        //AudioManager.Play("sound_0");
         if (onGround > 0)
         {
             rb.velocity = new Vector2(0, jumpForce);

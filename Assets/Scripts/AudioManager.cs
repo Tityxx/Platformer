@@ -18,7 +18,12 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
             music = new Dictionary<string, AudioMuter>();
             GameObject[] musicArr = GameObject.FindGameObjectsWithTag("Music");
-            foreach (GameObject audio in musicArr) music.Add(audio.name, audio.GetComponent<AudioMuter>());
+            foreach (GameObject audio in musicArr)
+            {
+                AudioMuter am = audio.GetComponent<AudioMuter>();
+                music.Add(audio.name, am);
+                if (am.isMusic) maxQtyMusic++;
+            }
         }
         else
         {

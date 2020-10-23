@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     private int scoresOnLevel = 0;
-    public int globalScores = 0;
+    private int globalScores = 0;
 
     private List<Color> keys;
 
@@ -41,9 +41,9 @@ public class GameManager : MonoBehaviour
 
     public void LoadNewScene(string name, bool saveScores, LoadSceneMode sceneMode = LoadSceneMode.Single)
     {
+        if (saveScores) globalScores += scoresOnLevel;
         SceneManager.LoadScene(name, sceneMode);
-        if(saveScores) globalScores += scoresOnLevel;
-        scoresOnLevel = 0;
+        Initialized();
     }
 
     public void IncScores(Text text)
@@ -71,5 +71,6 @@ public class GameManager : MonoBehaviour
     private void Initialized()
     {
         keys = new List<Color>();
+        scoresOnLevel = 0;
     }
 }
